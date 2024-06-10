@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {initFlowbite} from "flowbite";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'article-ui';
+  //public appelPath= "../../assets/images/productimg/apple-watch.png";
+  ngOnInit(): void {
+    initFlowbite();
+  }
 }
