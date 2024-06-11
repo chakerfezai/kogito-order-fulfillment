@@ -23,5 +23,5 @@ public class Payment extends PanacheEntity implements Serializable {
     private long orderId;
     private String country;
     private PaymentMethod method;
-    private PaymentStatus paymentStatus;
+    private PaymentStatus paymentStatus = PaymentStatus.WAITING_PAYMENT;
 }

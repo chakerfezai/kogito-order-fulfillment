@@ -15,13 +15,14 @@ export class ProductPageComponent implements OnInit {
   private cartService = inject(CartService);
   products = this.productService.products;
 
+
   ngOnInit(): void {
     this.productService.list().subscribe();
-
   }
 
   addItem(newItem: Product) {
     this.cartService.addItem(newItem);
+    this.cartService.totalAmount();
   }
 
 

@@ -1,4 +1,4 @@
-package com.sciam.kogito.order.model;
+package com.sciam.kogito.dto;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
@@ -15,17 +15,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class ShippingDetails extends PanacheEntityBase implements Serializable {
+public class ShippingDetails implements Serializable {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shippingDetailsId;
     private String shippingMethod;
     private LocalDateTime shippingDate;
     private String shippingAddress;
     private ShippingStatus shippingStatus;
-    @OneToOne(mappedBy = "shippingDetails")
-    private Order order;
 }

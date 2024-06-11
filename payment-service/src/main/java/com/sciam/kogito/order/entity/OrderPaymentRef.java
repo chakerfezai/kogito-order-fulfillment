@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 public class OrderPaymentRef extends PanacheEntity {
     private long orderId;
     private long paymentId;
-    private String status;
+    private PaymentStatus status;
     private String processRefId;
 }

@@ -6,16 +6,18 @@ import {CartService} from "../service/cart.service";
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
 
-  @Input() cartCount:number=0;
+  totalItems = computed(() => this.cartItems.reduce((sum, item) => sum + item.quantity, 0));
+
 
   private cartService = inject(CartService);
   cartItems = this.cartService.cartItems();
-  totalItems = computed(() => this.cartItems.reduce((sum, item) => sum + item.quantity, 0));
+  @Input() cartCount: number = this.totalItems() | 0;
+
 
   ngOnInit(): void {
-    this.cartCount = this.totalItems();
+    //this.cartCount = this.totalItems();
   }
 
 

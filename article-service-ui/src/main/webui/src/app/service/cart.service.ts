@@ -16,7 +16,7 @@ export class CartService {
   );
 
   private calculateTotalAmount(items: OrderItem[]): number {
-    return items.reduce((total, item) => total + item.totalPrice * item.quantity, 0);
+    return items.reduce((total, item) => total + item.amount * item.quantity, 0);
   }
 
   addItem(item: Product) {
@@ -30,12 +30,13 @@ export class CartService {
       if (existingItem) {
         // Increment quantity if item already exists
         existingItem.quantity += 1;
-        existingItem.totalPrice += item.price;
+        existingItem.amount += item.price;
       } else {
         currentCart?.push({
           product: item,
+          productId: item?.productId,
           quantity: 1,
-          totalPrice: item.price
+          amount: item.price
         });
       }
       return currentCart;

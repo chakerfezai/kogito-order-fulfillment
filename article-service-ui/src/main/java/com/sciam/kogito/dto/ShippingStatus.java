@@ -1,4 +1,4 @@
-package com.sciam.kogito.order.model;
+package com.sciam.kogito.dto;
 
 public enum ShippingStatus {
     PENDING,
