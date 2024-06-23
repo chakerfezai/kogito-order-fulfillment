@@ -3,7 +3,7 @@ package com.sciam.kogito.resource;
 
 import com.sciam.kogito.dto.Order;
 import com.sciam.kogito.proxy.OrderProxy;
-import com.sciam.kogito.service.OrderService;
+import com.sciam.kogito.service.KafkaOrdersProducer;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -25,6 +25,9 @@ public class OrderResource {
     @RestClient
     OrderProxy orderProxy;
 
+    @Inject
+    KafkaOrdersProducer kafkaOrdersProducer;
+
     @POST
     public Response save(Order order) {
         if (order == null) {
@@ -32,8 +35,8 @@ public class OrderResource {
         }
         UUID transactionId = UUID.randomUUID();
         order.setTransactionId(transactionId);
-        orderProxy.save(order);
         log.info("received order {}", order);
+        kafkaOrdersProducer.publishOrder(order);
         return Response.ok(transactionId).build();
     }
 }

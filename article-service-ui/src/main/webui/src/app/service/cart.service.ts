@@ -1,6 +1,5 @@
 import {computed, Injectable, signal} from '@angular/core';
 import {Product} from "../_interface/product";
-import {ShoppingCart} from "../_interface/shopping-cart";
 import {OrderItem} from "../_interface/order-item";
 
 @Injectable({

@@ -18,7 +18,7 @@ export interface Address {
 
 export function addressToString(address: Address | undefined) {
   if (address) {
-    return address.street + " " + address.city + " " + address.zipCode + address.country;
+    return address.street + " " + address.city + " " + address.zipCode + " "+address.country;
   }
   return '';
 

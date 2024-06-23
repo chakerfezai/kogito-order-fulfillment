@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Data
@@ -18,10 +19,14 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 public class Payment extends PanacheEntity implements Serializable {
+    private UUID transactionId;
     private double amount;
     private LocalDateTime paymentDate;
     private long orderId;
-    private String country;
+    private String countryOrigin;
+    private String countryDestination;
     private PaymentMethod method;
-    private PaymentStatus paymentStatus = PaymentStatus.WAITING_PAYMENT;
+    private PaymentStatus paymentStatus;
+    private String reason;
+    private String processInstanceId;
 }

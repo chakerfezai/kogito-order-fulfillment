@@ -1,4 +1,4 @@
-import {Component, effect, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 
 import {ProductService} from "../service/product-service";
 import {CartService} from "../service/cart.service";

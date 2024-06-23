@@ -1,9 +1,26 @@
 package com.sciam.kogito.resource;
 
-import com.sciam.kogito.shop.entity.Product;
-import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
-import io.quarkus.rest.data.panache.ResourceProperties;
+import com.sciam.kogito.proxy.StockProxy;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-@ResourceProperties(path = "/product")
-public interface ProductResource extends PanacheEntityResource<Product,Long> {
+@Path("/product")
+public class ProductResource  {
+
+    @Inject
+    @RestClient
+    StockProxy stockProxy;
+
+    @GET
+    public Response allProduct() {
+        try {
+            return Response.ok(stockProxy.allProduct()).build();
+        }catch (Exception ex) {
+            return Response.serverError().entity(ex.getMessage()).build();
+        }
+
+    }
 }

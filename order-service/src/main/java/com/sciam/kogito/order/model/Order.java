@@ -7,7 +7,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -24,13 +25,18 @@ public class Order extends PanacheEntityBase implements Serializable {
     private long orderId;
     private long customerId;
     @Transient
-    private Set<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
     private Double totalAmount;
     private LocalDateTime orderDate;
     private OrderStatus status = OrderStatus.PENDING;
+    private InventoryStatus inventoryStatus;
     private long paymentId;
     private PaymentStatus paymentStatus;
     private String ShippingAddress;
+    private UUID transactionId;
+    private String processInstanceId;
+    private String countryOrigin;
+    private String countryDestination;
     @OneToOne
     @JoinColumn(name = "shippingDetailsId")
     private ShippingDetails shippingDetails;

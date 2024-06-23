@@ -3,11 +3,13 @@ import {OrderStatus} from "./enum/order.status";
 
 export interface Order {
   orderId?: number
-  customerId: number;
-  orderItems: OrderItem[];
+  customerId?: number;
+  orderItems?: OrderItem[];
   status?: OrderStatus;
   orderDate?: Date;
-  totalAmount:number;
-  shippingAddress:string;
+  totalAmount?:number;
+  countryOrigin?: string;
+  countryDestination?: string;
+  shippingAddress?:string;
 }
 

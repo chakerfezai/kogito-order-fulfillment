@@ -1,4 +1,4 @@
-package com.sciam.kogito.order.dto;
+package com.sciam.kogito.order.payload;
 
 
 import lombok.AllArgsConstructor;
@@ -6,9 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentRequest {
+public class CheckFraud {
+
+    private String status;
+    private String reason;
 }
+

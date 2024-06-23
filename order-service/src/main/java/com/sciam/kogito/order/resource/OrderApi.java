@@ -21,15 +21,15 @@ public class OrderApi {
     @Inject
     OrderService orderService;
 
-    @POST
-    @Path("/save")
-    public Response save(Order order) {
-        if (order == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
-        Order orderCreated = orderService.createOrder(order);
-        return Response.ok(orderCreated).build();
-    }
+//    @POST
+//    @Path("/save")
+//    public Response save(Order order) {
+//        if (order == null) {
+//            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+//        }
+//        Order orderCreated = orderService.createOrder(order);
+//        return Response.ok(orderCreated).build();
+//    }
 
     @GET
     @Path("/select/{id}")

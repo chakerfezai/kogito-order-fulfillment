@@ -7,7 +7,7 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {HomeComponent} from './home/home.component';
 import {ProductPageComponent} from './product-page/product-page.component';
 import {HttpClientModule} from "@angular/common/http";
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
