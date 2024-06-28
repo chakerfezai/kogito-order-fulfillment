@@ -20,6 +20,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface PaymentProxy {
 
     @POST
-    @Path("/api/payment/create")
+    @Path("/payment/create")
     Response create(Payment payment);
 }
