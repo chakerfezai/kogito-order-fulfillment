@@ -1,5 +1,7 @@
 import {Component, computed, inject, Input, OnInit} from '@angular/core';
 import {CartService} from "../service/cart.service";
+import {LocalStorageService} from "../service/local.storage.service";
+import {MessageService} from "../service/message.service";
 
 @Component({
   selector: 'app-navbar',
@@ -8,16 +10,18 @@ import {CartService} from "../service/cart.service";
 })
 export class NavbarComponent implements OnInit {
 
-  totalItems = computed(() => this.cartItems.reduce((sum, item) => sum + item.quantity, 0));
-
-
+  private localStorageService = inject(LocalStorageService);
+  private messageService = inject(MessageService);
   private cartService = inject(CartService);
   cartItems = this.cartService.cartItems();
-  @Input() cartCount: number = this.totalItems() | 0;
-
+  protected count: number = 0;
 
   ngOnInit(): void {
-    //this.cartCount = this.totalItems();
+
+    this.messageService.getCount().subscribe(value => {
+      this.count = this.cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    });
+
   }
 
 

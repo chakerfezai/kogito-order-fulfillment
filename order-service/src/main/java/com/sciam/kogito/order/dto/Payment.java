@@ -1,14 +1,17 @@
 package com.sciam.kogito.order.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Builder
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Payment {
 
+    private UUID transactionId;
     private double amount;
     private LocalDateTime paymentDate;
     private long orderId;

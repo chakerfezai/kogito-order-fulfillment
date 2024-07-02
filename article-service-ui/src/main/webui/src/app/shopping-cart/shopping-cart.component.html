@@ -87,9 +87,15 @@
 </div>
 <div class="border-t border-gray-200 pt-4 dark:border-gray-700 md:pt-5">
   @if (totalItems() > 0) {
-    <button type="button" data-modal-toggle="billingInformationModal" (click)="createOrder()"
-            class="me-2 rounded-lg border border-gray-200 bg-primary px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
-      Send the order
-    </button>
+    <div class="flex gap-4 mx-auto w-1/2 sm:flex sm:items-center justify-center items-center">
+      <button type="button" data-modal-toggle="billingInformationModal" (click)="createOrder()"
+              class="flex  w-full items-center justify-center  rounded-lg border border-gray-200 bg-blend-soft-light  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800">
+        Return to Shopping
+      </button>
+      <button type="button" data-modal-toggle="billingInformationModal" (click)="createOrder()"
+              class="flex  w-full items-center justify-center  rounded-lg border border-gray-200 bg-primary  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800">
+        Proceed to Checkout
+      </button>
+    </div>
   }
 </div>

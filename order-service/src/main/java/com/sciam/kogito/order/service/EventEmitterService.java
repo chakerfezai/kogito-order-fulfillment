@@ -14,11 +14,14 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class EventEmitterService {
 
 
+    private static final Logger log = LoggerFactory.getLogger(EventEmitterService.class);
     @Inject
     @RestClient
     PaymentProxy paymentProxy;
@@ -42,7 +45,9 @@ public class EventEmitterService {
         Order orderToUpdate = Order.findById(order.getOrderId());
         orderToUpdate.setInventoryStatus(InventoryStatus.valueOf(inventoryStatus));
         orderToUpdate.persistAndFlush();
+        log.info("Payment created for {}", orderToUpdate);
         Payment payment = Payment.builder()
+                .transactionId(order.getTransactionId())
                 .orderId(orderToUpdate.getOrderId())
                 .amount(orderToUpdate.getTotalAmount())
                 .processInstanceId(orderToUpdate.getProcessInstanceId())
@@ -50,6 +55,7 @@ public class EventEmitterService {
                 .countryDestination(orderToUpdate.getCountryDestination())
                 .build();
         try {
+            log.info("payment : {}", payment);
             Response response = paymentProxy.create(payment);
             long paymentId = response.readEntity(Long.class);
             orderToUpdate.setPaymentStatus(PaymentStatus.PENDING);

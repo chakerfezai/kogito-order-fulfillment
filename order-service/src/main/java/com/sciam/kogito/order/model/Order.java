@@ -11,11 +11,10 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 @Entity
 @Schema(name = "Order", description = "shopping cart details")
 public class Order extends PanacheEntityBase implements Serializable {

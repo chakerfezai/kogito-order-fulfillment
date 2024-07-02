@@ -64,8 +64,6 @@ public class StockService {
             log.error("Error updating stock", e);
             return InventoryStatus.FAILED.name();
         }
-
-
     }
 
 
@@ -96,10 +94,8 @@ public class StockService {
 
     private void updateProductStock(String productId, int itemQuantity) {
         Product product1 = Product.findProductId(productId);
-        log.info("Updating stock from {} , {}", productId, itemQuantity);
         int quantity = product1.getStockQuantity() - itemQuantity;
         product1.setStockQuantity(quantity);
-        log.info("Updating stock from {} , {}", productId, quantity);
         product1.persist();
     }
 }

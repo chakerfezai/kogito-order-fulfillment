@@ -1,4 +1,4 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, effect, Injectable, signal} from '@angular/core';
 import {Product} from "../_interface/product";
 import {OrderItem} from "../_interface/order-item";
 
@@ -13,6 +13,8 @@ export class CartService {
     this.cartItems().reduce((total, item) =>
       total + (item.product.price * Number(item.quantity)), 0)
   );
+
+  totals = computed(() => this.cartItems().length);
 
   private calculateTotalAmount(items: OrderItem[]): number {
     return items.reduce((total, item) => total + item.amount * item.quantity, 0);

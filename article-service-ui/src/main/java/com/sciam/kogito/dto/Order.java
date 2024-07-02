@@ -26,4 +26,6 @@ public class Order implements Serializable {
     private OrderStatus status;
     private String orderRef;
     private String ShippingAddress;
+    private String countryOrigin;
+    private String countryDestination;
 }

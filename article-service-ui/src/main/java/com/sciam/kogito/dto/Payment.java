@@ -1,4 +1,4 @@
-package com.sciam.kogito.order.entity;
+package com.sciam.kogito.dto;
 
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -17,8 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class Payment extends PanacheEntity implements Serializable {
+public class Payment {
     private UUID transactionId;
     private double amount;
     private LocalDateTime paymentDate;
@@ -29,9 +28,4 @@ public class Payment extends PanacheEntity implements Serializable {
     private PaymentStatus paymentStatus;
     private String reason;
     private String processInstanceId;
-
-    public static Payment findByTransactionId(UUID transactionId){
-        return find("transactionId", transactionId).firstResult();
-    }
-
 }
