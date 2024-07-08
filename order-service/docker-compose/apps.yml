@@ -20,7 +20,7 @@ services:
       KOGITO_DATAINDEX_HTTP_URL: http://data-index:8080
       QUARKUS_FLYWAY_BASELINE_ON_MIGRATE: "true"
     volumes:
-      - ./svg/:/home/kogito/data/svg/
+      - ./../target/classes/META-INF/processSVG/:/home/kogito/data/svg/
     networks:
       - kogito-net
 

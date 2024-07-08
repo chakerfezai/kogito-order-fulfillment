@@ -10,31 +10,31 @@
 
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (1, 'SW001', 'Running Shoes', 'Lightweight running shoes with breathable mesh upper', 89.99, 100);
+VALUES (1, 'SW001', 'Running Shoes', 'Lightweight running shoes with breathable mesh upper', 89.00, 100);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (2, 'SW002', 'Sports T-Shirt', 'Moisture-wicking sports t-shirt for maximum comfort', 29.99, 200);
+VALUES (2, 'SW002', 'Sports T-Shirt', 'Moisture-wicking sports t-shirt for maximum comfort', 29.00, 200);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (3, 'SW003', 'Yoga Pants', 'Stretchable yoga pants with a high-waist design', 49.99, 150);
+VALUES (3, 'SW003', 'Yoga Pants', 'Stretchable yoga pants with a high-waist design', 49.00, 150);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (4, 'SW004', 'Sports Jacket', 'Windproof and waterproof sports jacket with hood', 59.99, 80);
+VALUES (4, 'SW004', 'Sports Jacket', 'Windproof and waterproof sports jacket with hood', 59.00, 80);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (5, 'SW005', 'Gym Shorts', 'Comfortable gym shorts with quick-dry fabric', 34.99, 120);
+VALUES (5, 'SW005', 'Gym Shorts', 'Comfortable gym shorts with quick-dry fabric', 34.00, 120);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (6, 'SW006', 'Tennis Shoes', 'Lightweight running shoes with breathable mesh upper', 79.99, 120);
+VALUES (6, 'SW006', 'Tennis Shoes', 'Lightweight running shoes with breathable mesh upper', 79.00, 120);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (7, 'SW007', 'Sports T-Shirt', 'Moisture-wicking sports t-shirt for maximum comfort', 29.99, 200);
+VALUES (7, 'SW007', 'Sports T-Shirt', 'Moisture-wicking sports t-shirt for maximum comfort', 29.00, 200);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
 VALUES (8, 'SW008', 'Football Shoes', 'Lightweight football shoes with breathable mesh upper', 19.99, 250);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
-VALUES (9, 'SW009', 'Track Pants', 'Comfortable track pants with elastic waistband', 59.99, 140);
+VALUES (9, 'SW009', 'Track Pants', 'Comfortable track pants with elastic waistband', 1100, 140);
 
 INSERT INTO Product (id, productId, name, description, price, stockQuantity)
 VALUES (10, 'SW010', 'Swim Trunks', 'Quick-dry swim trunks with mesh lining', 29.99, 110);
