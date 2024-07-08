@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Payment} from "../_interface/payment";
-import {filter, Observable, repeat, take} from "rxjs";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'

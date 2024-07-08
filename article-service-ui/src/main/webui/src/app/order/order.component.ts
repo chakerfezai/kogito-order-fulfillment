@@ -5,6 +5,7 @@ import {Order} from "../_interface/order";
 import {initFlowbite} from "flowbite";
 import {Shipping} from "../_interface/shipping";
 import {ShippingService} from "../service/shipping.service";
+import {Observable, timer} from "rxjs";
 
 @Component({
   selector: 'app-order',
@@ -16,18 +17,19 @@ export class OrderComponent implements OnInit, AfterViewInit {
   orderService = inject(OrderService);
   shippingService = inject(ShippingService);
   orders = this.orderService.orders();
+  everyFiveSeconds: Observable<number> = timer(0, 5000);
 
   ngOnInit(): void {
     setTimeout(() => {
       initFlowbite();
     }, 1000);
+    this.fetchData();
+  }
 
+  fetchData() {
     this.orderService.allOrders().subscribe(value => {
       console.table(value)
       this.orders = value;
-      // setTimeout(() => {
-      //   initFlowbite();
-      // }, 1000);
     });
   }
 
@@ -41,7 +43,9 @@ export class OrderComponent implements OnInit, AfterViewInit {
       processInstanceId: order.processInstanceId,
       status: "COMPLETE"
     }
-    this.shippingService.shippingActions(shipping).subscribe(value => console.log(value));
+    this.shippingService.shippingActions(shipping).subscribe(value => {
+      this.fetchData();
+    });
   }
 
   onShippingFailed(order: Order) {
@@ -50,7 +54,9 @@ export class OrderComponent implements OnInit, AfterViewInit {
       processInstanceId: order.processInstanceId,
       status: "FAILED"
     }
-    this.shippingService.shippingActions(shipping).subscribe();
+    this.shippingService.shippingActions(shipping).subscribe(value => {
+      this.fetchData();
+    });
   }
 
   onDelivred(order: Order) {
