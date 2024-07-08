@@ -3,6 +3,7 @@ package com.sciam.kogito.service;
 import com.sciam.kogito.dto.Order;
 import com.sciam.kogito.dto.Payment;
 import com.sciam.kogito.dto.PaymentStatus;
+import com.sciam.kogito.dto.Shipping;
 import io.smallrye.reactive.messaging.ce.OutgoingCloudEventMetadata;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -26,6 +27,10 @@ public class KafkaOrdersProducer {
     @Inject
     @Channel("orders-payment-in")
     Emitter<Payment> paymentEmitter;
+
+    @Inject
+    @Channel("orders-shipping-in")
+    Emitter<Shipping> shippingEmitter;
 
     public void publishOrder(Order order) {
         OutgoingCloudEventMetadata<Object> eventMetadata = null;
@@ -61,7 +66,26 @@ public class KafkaOrdersProducer {
         }catch (Exception exception) {
             throw new RuntimeException();
         }
+    }
 
+
+    public void
+    publishShipping(Shipping shipping) {
+        OutgoingCloudEventMetadata<Object> eventMetadata = null;
+        try {
+            eventMetadata = OutgoingCloudEventMetadata.builder()
+                    .withId("id-" +shipping.getOrderId())
+                    .withSpecVersion("1.0")
+                    .withTimestamp(ZonedDateTime.now())
+                    .withSource(new URI("orders-shipping-in"))
+                    .withType("orders-shipping-in")
+                    .build();
+
+            log.info("Publishing request shipping {}, metadata {}", shipping, eventMetadata);
+            shippingEmitter.send(Message.of(shipping).addMetadata(eventMetadata));
+        }catch (Exception exception) {
+            throw new RuntimeException();
+        }
     }
 
 }

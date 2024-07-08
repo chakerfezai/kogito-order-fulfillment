@@ -7,9 +7,11 @@ export interface Order {
   orderItems?: OrderItem[];
   status?: OrderStatus;
   orderDate?: Date;
+  reference?:String;
   totalAmount?:number;
   countryOrigin?: string;
   countryDestination?: string;
   shippingAddress?:string;
+  processInstanceId?:string;
 }
 

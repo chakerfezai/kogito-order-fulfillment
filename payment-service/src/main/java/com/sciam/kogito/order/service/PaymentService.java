@@ -1,14 +1,16 @@
 package com.sciam.kogito.order.service;
 
-import com.google.gson.Gson;
+
 import com.sciam.kogito.order.entity.Payment;
 import com.sciam.kogito.order.entity.PaymentStatus;
 import com.sciam.kogito.order.payload.CheckFraud;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.vertx.ConsumeEvent;
 import io.smallrye.reactive.messaging.ce.OutgoingCloudEventMetadata;
 import io.smallrye.reactive.messaging.kafka.Record;
+import io.vertx.mutiny.core.eventbus.EventBus;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -38,26 +40,14 @@ public class PaymentService {
     }
 
 
-    /**
-     * Update stock from order.
-     *
-     * @param record the order
-     */
-    @Incoming("orders-payment-in")
-    public void updateStockFromOrder(Record<Integer, String> record) {
-        Gson gson = new Gson();
-        Payment payment = gson.fromJson(record.value(), Payment.class);
-        log.info("receive payment {} , {}", record.key(), payment);
-    }
-
-    /**
-     * The Emitter.
-     */
     @Inject
     @Channel("orders-payment-out")
     Emitter<String> emitter;
 
+    @Inject
+    EventBus bus;
 
+    @Transactional
     public void publishOrder(Payment payment, CheckFraud checkFraud) {
         OutgoingCloudEventMetadata<Object> eventMetadata = null;
         Map<String, Object> extensions = new HashMap<>();
@@ -78,7 +68,7 @@ public class PaymentService {
                 case "APPROVED":
                     payment.setPaymentStatus(PaymentStatus.SUCCESSFUL_PAYMENT);
             }
-            payment.persist();
+            bus.send("payment", payment);
             log.info("Publishing response to order {}, metadata {}", checkFraudStatus, payment.getProcessInstanceId());
             emitter.send(Message.of(checkFraudStatus).addMetadata(eventMetadata));
         } catch (Exception exception) {
@@ -107,6 +97,14 @@ public class PaymentService {
             payment1.setPaymentStatus(PaymentStatus.CANCELLED);
             payment1.persist();
         }
+    }
+
+
+    @ConsumeEvent(value = "payment", blocking = true)
+    @Transactional
+    public void consume(Payment payment) {
+        log.info("receive payment {}", payment.getProcessInstanceId());
+        payment.persist();
     }
 
 }

@@ -13,7 +13,7 @@ export class UserService {
   private http = inject(HttpClient);
   private localStorageService = inject(LocalStorageService);
   user = signal<Customer | null>(null);
-  readonly url = '/api/customer/1';
+  readonly url = '/customer/1';
 
 
   getUser(): Observable<Customer> {

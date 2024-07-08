@@ -1,4 +1,4 @@
-import {computed, effect, Injectable, signal} from '@angular/core';
+import {computed, Injectable, signal} from '@angular/core';
 import {Product} from "../_interface/product";
 import {OrderItem} from "../_interface/order-item";
 

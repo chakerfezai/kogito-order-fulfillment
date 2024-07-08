@@ -25,7 +25,7 @@ public interface PaymentResource extends PanacheEntityResource<Payment, Long> {
     }
 
     @GET
-    @Path("/byTransactionId/{transactionId}")
+    @Path("/byTransactionId/{transactionId}/order")
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional

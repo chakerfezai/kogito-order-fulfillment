@@ -1,5 +1,5 @@
 import {inject, Injectable, signal} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Payment} from "../_interface/payment";
 import {filter, Observable, repeat, take} from "rxjs";
 
@@ -13,17 +13,18 @@ export class PaymentService {
 
 
   getPayment(transactionId: string): Observable<Payment> {
-    let url = '/api/payment/byTransactionId' + '/' + transactionId;
-    return this.http.get<Payment>(url)
-      .pipe(
-        repeat({delay: 1000}),
-        filter((res) => res !== null),
-        take(1)
-      );
+
+    transactionId = transactionId.trim();
+
+    const options = transactionId ?
+      {params: new HttpParams().set('transactionId', transactionId)} : {};
+
+    //let url = `/payment/byTransactionId/${transactionId}/order\`;
+    return this.http.get<Payment>(`/payment/byTransactionId/${transactionId}/order`);
   }
 
   validatePayment(payment: Payment | undefined): Observable<any> {
-    let url = '/api/payment/validate';
+    let url = '/payment/validate';
     return this.http.post(url, payment);
   }
 }

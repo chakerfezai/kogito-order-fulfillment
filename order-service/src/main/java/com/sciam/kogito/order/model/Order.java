@@ -2,7 +2,10 @@ package com.sciam.kogito.order.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -26,13 +29,15 @@ public class Order extends PanacheEntityBase implements Serializable {
     @Transient
     private List<OrderItem> orderItems;
     private Double totalAmount;
-    private LocalDateTime orderDate;
+    @Builder.Default
+    private LocalDateTime orderDate = LocalDateTime.now();
     private OrderStatus status = OrderStatus.PENDING;
     private InventoryStatus inventoryStatus;
     private long paymentId;
     private PaymentStatus paymentStatus;
     private String ShippingAddress;
     private UUID transactionId;
+    private String reference;
     private String processInstanceId;
     private String countryOrigin;
     private String countryDestination;

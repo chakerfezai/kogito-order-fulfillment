@@ -4,6 +4,7 @@ import com.sciam.kogito.order.dto.InventoryOrder;
 import com.sciam.kogito.order.dto.Payment;
 import com.sciam.kogito.order.model.InventoryStatus;
 import com.sciam.kogito.order.model.Order;
+import com.sciam.kogito.order.model.OrderStatus;
 import com.sciam.kogito.order.model.PaymentStatus;
 import com.sciam.kogito.order.proxy.PaymentProxy;
 import io.smallrye.reactive.messaging.kafka.Record;
@@ -40,12 +41,13 @@ public class EventEmitterService {
         return order;
     }
 
+
     @Transactional
     public Order createPayment(Order order, String inventoryStatus) {
         Order orderToUpdate = Order.findById(order.getOrderId());
         orderToUpdate.setInventoryStatus(InventoryStatus.valueOf(inventoryStatus));
         orderToUpdate.persistAndFlush();
-        log.info("Payment created for {}", orderToUpdate);
+
         Payment payment = Payment.builder()
                 .transactionId(order.getTransactionId())
                 .orderId(orderToUpdate.getOrderId())
@@ -55,9 +57,11 @@ public class EventEmitterService {
                 .countryDestination(orderToUpdate.getCountryDestination())
                 .build();
         try {
-            log.info("payment : {}", payment);
+            log.info("Payment call payment service for {}", orderToUpdate);
             Response response = paymentProxy.create(payment);
             long paymentId = response.readEntity(Long.class);
+            log.info("Payment created for {} , {}", orderToUpdate.getOrderId(), paymentId);
+            orderToUpdate.setStatus(OrderStatus.WAITING_PAYMENT);
             orderToUpdate.setPaymentStatus(PaymentStatus.PENDING);
             orderToUpdate.setPaymentId(paymentId);
             orderToUpdate.persistAndFlush();

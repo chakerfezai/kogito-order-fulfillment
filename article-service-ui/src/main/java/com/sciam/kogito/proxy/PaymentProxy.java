@@ -15,6 +15,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface PaymentProxy {
 
     @GET
-    @Path("/byTransactionId/{transactionId}")
+    @Path("/byTransactionId/{transactionId}/order")
     Response getPaymentByTransactionId(@PathParam("transactionId") String transactionId);
 }

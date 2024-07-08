@@ -6,6 +6,7 @@ import {addressToString, Customer} from "../_interface/customer";
 import {OrderService} from "../service/order.service";
 import {Order} from "../_interface/order";
 import {Router, Routes} from "@angular/router";
+import {initFlowbite} from "flowbite";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -29,7 +30,7 @@ export class ShoppingCartComponent {
   createOrder() {
     const user = localStorage.getItem('user');
     const customer = null;
-   //this.localStorageService.setItem("transactionId", "");
+    //this.localStorageService.setItem("transactionId", "");
     let order: Order = {};
     if (user) {
       const customer: Customer = JSON.parse(user);
@@ -45,7 +46,9 @@ export class ShoppingCartComponent {
           console.log("transaction id :", value)
           this.localStorageService.setItem("transactionId", value)
         }, error => console.error(error),
-        () => this.route.navigateByUrl('payment'));
+        () => setTimeout(() => {
+          this.route.navigateByUrl('payment')
+        }, 1000));
     }
     console.log("order", order)
   }

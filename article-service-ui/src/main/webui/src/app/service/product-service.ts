@@ -10,7 +10,7 @@ import {Observable, tap} from "rxjs";
 export class ProductService {
   private http = inject(HttpClient);
   products = signal<Product[]>([])
-  readonly url = '/api/product?sort=id';
+  readonly url = '/product?sort=id';
 
 
   list(): Observable<Product[]> {

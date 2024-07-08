@@ -28,8 +28,9 @@ public class PaymentResource {
 
 
     @GET
-    @Path("/byTransactionId/{transactionId}")
+    @Path("/byTransactionId/{transactionId}/order")
     public Response getPayment(@PathParam("transactionId") String transactionId) {
+        log.info("Getting payment for transaction id {}", transactionId);
         return paymentProxy.getPaymentByTransactionId(transactionId);
     }
 
