@@ -77,5 +77,9 @@ public class OrderService {
         });
     }
 
+    public void makeException() {
+        throw new RuntimeException("Exception from OrderService");
+    }
+
 
 }

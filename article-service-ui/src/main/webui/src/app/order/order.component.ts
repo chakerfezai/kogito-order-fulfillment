@@ -5,7 +5,8 @@ import {Order} from "../_interface/order";
 import {initFlowbite} from "flowbite";
 import {Shipping} from "../_interface/shipping";
 import {ShippingService} from "../service/shipping.service";
-import {Observable, timer} from "rxjs";
+import {Observable,Subscription, timer} from "rxjs";
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order',
@@ -18,11 +19,19 @@ export class OrderComponent implements OnInit, AfterViewInit {
   shippingService = inject(ShippingService);
   orders = this.orderService.orders();
   everyFiveSeconds: Observable<number> = timer(0, 5000);
+  subscription !: Subscription;
 
   ngOnInit(): void {
     setTimeout(() => {
       initFlowbite();
     }, 1000);
+    this.subscription = timer(0, 5000).pipe(
+      switchMap(() => this.orderService.allOrders())
+    ).subscribe(result => {
+      console.table(result)
+      this.orders = result;
+    }
+    );
     this.fetchData();
   }
 
