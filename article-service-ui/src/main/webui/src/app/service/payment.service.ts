@@ -25,6 +25,7 @@ export class PaymentService {
 
   validatePayment(payment: Payment | undefined): Observable<any> {
     let url = '/payment/validate';
+    console.log('validate payment' , payment)
     return this.http.post(url, payment);
   }
 }

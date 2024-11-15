@@ -1,30 +1,36 @@
 package com.sciam.kogito.order.dto;
 
-import com.sciam.kogito.order.model.*;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sciam.kogito.order.model.OrderItem;
+import com.sciam.kogito.order.model.OrderStatus;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-public class OrderDto {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonDeserialize(using = OrderDtoDeserializer.class)
+public class OrderDto implements Serializable {
 
 
     private long orderId;
     private long customerId;
     private List<OrderItem> orderItems;
     private Double totalAmount;
-    private LocalDateTime orderDate = LocalDateTime.now();
-    private OrderStatus status ;
-    private InventoryStatus inventoryStatus;
+    private Date orderDate;
+    private OrderStatus status;
     private long paymentId;
-    private PaymentStatus paymentStatus;
     private String ShippingAddress;
     private String transactionId;
     private String reference;
     private String processInstanceId;
     private String countryOrigin;
     private String countryDestination;
-    private ShippingDetails shippingDetails;
 }

@@ -1,7 +1,9 @@
 package com.sciam.kogito.order.service;
 
 import com.sciam.kogito.order.dto.InventoryOrder;
+import com.sciam.kogito.order.dto.OrderDto;
 import com.sciam.kogito.order.dto.Payment;
+import com.sciam.kogito.order.mapper.OrderMapper;
 import com.sciam.kogito.order.model.InventoryStatus;
 import com.sciam.kogito.order.model.Order;
 import com.sciam.kogito.order.model.OrderStatus;
@@ -31,25 +33,28 @@ public class EventEmitterService {
     @Channel("orders-stock-in")
     Emitter<Record<Integer, InventoryOrder>> emitter;
 
-    public Order sendInventory(Order order) {
+    @Inject
+    OrderMapper orderMapper;
+
+    public OrderDto sendInventory(OrderDto orderDto) {
         InventoryOrder inventoryOrder = InventoryOrder.builder()
-                .orderId(order.getOrderId())
-                .orderItems(order.getOrderItems())
-                .processInstanceId(order.getProcessInstanceId())
+                .orderId(orderDto.getOrderId())
+                .orderItems(orderDto.getOrderItems())
+                .processInstanceId(orderDto.getProcessInstanceId())
                 .build();
         emitter.send(Record.of((int) inventoryOrder.getOrderId(), inventoryOrder));
-        return order;
+        return orderDto;
     }
 
 
     @Transactional
-    public Order createPayment(Order order, String inventoryStatus) {
-        Order orderToUpdate = Order.findById(order.getOrderId());
+    public OrderDto createPayment(OrderDto orderDto, String inventoryStatus) {
+        Order orderToUpdate = Order.findById(orderDto.getOrderId());
         orderToUpdate.setInventoryStatus(InventoryStatus.valueOf(inventoryStatus));
         orderToUpdate.persistAndFlush();
 
         Payment payment = Payment.builder()
-                .transactionId(order.getTransactionId())
+                .transactionId(orderToUpdate.getTransactionId())
                 .orderId(orderToUpdate.getOrderId())
                 .amount(orderToUpdate.getTotalAmount())
                 .processInstanceId(orderToUpdate.getProcessInstanceId())
@@ -65,7 +70,7 @@ public class EventEmitterService {
             orderToUpdate.setPaymentStatus(PaymentStatus.PENDING);
             orderToUpdate.setPaymentId(paymentId);
             orderToUpdate.persistAndFlush();
-            return orderToUpdate;
+            return orderMapper.toOrderDto(orderToUpdate);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
