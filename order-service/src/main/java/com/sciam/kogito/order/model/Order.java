@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,7 +18,7 @@ import java.util.UUID;
 @Builder
 @Data
 @Entity
-@Schema(name = "Order", description = "shopping cart details")
+@Table(name = "shipping_order")
 public class Order extends PanacheEntityBase implements Serializable {
 
     @Id
@@ -31,7 +30,7 @@ public class Order extends PanacheEntityBase implements Serializable {
     private Double totalAmount;
     @Builder.Default
     private LocalDateTime orderDate = LocalDateTime.now();
-    private OrderStatus status = OrderStatus.PENDING;
+    private OrderStatus status ;
     private InventoryStatus inventoryStatus;
     private long paymentId;
     private PaymentStatus paymentStatus;

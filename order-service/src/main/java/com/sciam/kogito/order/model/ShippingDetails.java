@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "shipping_details")
 public class ShippingDetails extends PanacheEntityBase implements Serializable {
 
 

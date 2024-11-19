@@ -1,10 +1,13 @@
 package com.sciam.kogito.order.service;
 
+import com.sciam.kogito.order.dto.OrderDto;
+import com.sciam.kogito.order.mapper.OrderMapper;
 import com.sciam.kogito.order.model.Order;
 import com.sciam.kogito.order.model.OrderItem;
 import com.sciam.kogito.order.model.OrderStatus;
 import io.smallrye.reactive.messaging.kafka.Record;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -20,8 +23,13 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class OrderService {
 
+    @Inject
+    OrderMapper orderMapper;
+
     @Transactional
-    public Order placeOrder(Order order, KogitoProcessContext context) {
+    public OrderDto placeOrder(OrderDto orderDto, KogitoProcessContext context) {
+
+        Order order = orderMapper.fromOrderDto(orderDto);
         List<OrderItem> orderItems = order.getOrderItems();
         order.setProcessInstanceId(context.getProcessInstance().getStringId());
         order.setReference(RandomStringUtils.randomAlphanumeric(8, 12).toUpperCase());
@@ -32,35 +40,35 @@ public class OrderService {
             orderItem.setOrderId(order.getOrderId());
             orderItem.persist();
         });
-        return order;
+        return orderMapper.toOrderDto(order);
     }
 
     @Transactional
-    public Order cancelOrder(Order order) {
-        log.info("Cancelling order {}", order.getOrderId());
-        return updateOrder(order.getOrderId(), OrderStatus.CANCELLED);
+    public OrderDto cancelOrder(OrderDto orderDto) {
+        log.info("Cancelling order {}", orderDto.getOrderId());
+        return updateOrder(orderDto.getOrderId(), OrderStatus.CANCELLED);
     }
 
     @Transactional
-    public Order waitingShipping(Order order) {
-        log.info("Completing order {}", order.getOrderId());
-        return updateOrder(order.getOrderId(), OrderStatus.WAITING_SHIPPING);
+    public OrderDto waitingShipping(OrderDto orderDto) {
+        log.info("Completing order {}", orderDto.getOrderId());
+        return updateOrder(orderDto.getOrderId(), OrderStatus.WAITING_SHIPPING);
     }
 
     @Transactional
-    public Order completeOrder(Order order) {
-        log.info("Completing order {}", order.getOrderId());
-        return updateOrder(order.getOrderId(), OrderStatus.DELIVERED);
+    public OrderDto completeOrder(OrderDto orderDto) {
+        log.info("Completing order {}", orderDto.getOrderId());
+        return updateOrder(orderDto.getOrderId(), OrderStatus.DELIVERED);
     }
 
 
-    private Order updateOrder(long orderId, OrderStatus status) {
+    private OrderDto updateOrder(long orderId, OrderStatus status) {
         Optional<Order> order = Order.findByIdOptional(orderId);
         if (order.isPresent()) {
             Order order1 = order.get();
             order1.setStatus(status);
             order1.persistAndFlush();
-            return order1;
+            return orderMapper.toOrderDto(order1);
         }
         return null;
     }
@@ -75,6 +83,10 @@ public class OrderService {
         log.info("Shipping Order : {}", record.value());
         return CompletableFuture.runAsync(() -> {
         });
+    }
+
+    public void makeException() {
+        throw new RuntimeException("Exception from OrderService");
     }
 
 
