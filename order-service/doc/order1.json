@@ -1,0 +1,41 @@
+{
+  "orderId": 0,
+  "customerId": 1,
+  "transactionId": "8fb76d51-dcac-42a7-81ac-91e4cd7c0053",
+  "orderItems": [
+    {
+      "product": {
+        "id": 3,
+        "productId": "SW003 Sciam Meetup",
+        "name": "Yoga Pants",
+        "description": "Stretchable yoga pants with a high-waist design",
+        "price": 49.0,
+        "stockQuantity": 150
+      },
+      "productId": "SW003",
+      "quantity": 1,
+      "amount": 49.0
+    },
+    {
+      "product": {
+        "id": 2,
+        "productId": "SW002",
+        "name": "Sports T-Shirt",
+        "description": "Moisture-wicking sports t-shirt for maximum comfort",
+        "price": 29.0,
+        "stockQuantity": 198
+      },
+      "productId": "SW002",
+      "quantity": 1,
+      "amount": 29.0
+    }
+  ],
+  "totalAmount": 78.0,
+  "orderDate": null,
+  "status": null,
+  "reference": null,
+  "countryOrigin": "USA",
+  "countryDestination": "USA",
+  "processInstanceId": null,
+  "shippingAddress": "123 Main St Springfield 62701 USA"
+}

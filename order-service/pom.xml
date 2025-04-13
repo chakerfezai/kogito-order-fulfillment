@@ -137,6 +137,11 @@
             <version>2.44.0.Alpha</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jdbc-h2</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
