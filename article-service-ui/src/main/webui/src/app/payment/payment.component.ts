@@ -29,7 +29,7 @@ export class PaymentComponent implements OnInit {
   pay() {
     // @ts-ignore
     this.payment.method = PaymentMethod.BANK_TRANSFER;
-    this.paymentService.validatePayment(this.payment).subscribe(value => console.log(value))
+    this.paymentService.validatePayment(this.payment).subscribe(value => console.log("payment : ", value))
   }
 
 

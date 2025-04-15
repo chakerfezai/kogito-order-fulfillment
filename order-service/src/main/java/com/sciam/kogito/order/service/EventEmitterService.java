@@ -36,6 +36,8 @@ public class EventEmitterService {
     @Inject
     OrderMapper orderMapper;
 
+
+
     public OrderDto sendInventory(OrderDto orderDto) {
         InventoryOrder inventoryOrder = InventoryOrder.builder()
                 .orderId(orderDto.getOrderId())

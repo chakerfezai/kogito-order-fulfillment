@@ -36,9 +36,9 @@ VALUES (1, 'A001', '123 Main St', 'Springfield', 'IL', '62701', 'USA');
 INSERT INTO Address (id, addressId, street, city, state, zipCode, country)
 VALUES (2, 'A002', '456 Elm St', 'Columbus', 'OH', '43215', 'USA');
 
-INSERT INTO CUSTOMER (id, customerId, name, email, shippingAddressId, billingAddressId)
+INSERT INTO Customer (id, customerId, name, email, shippingAddressId, billingAddressId)
 VALUES (1, 'C001', 'John Doe', 'john.doe@example.com', 1, 1);
 
-INSERT INTO CUSTOMER (id, customerId, name, email, shippingAddressId, billingAddressId)
+INSERT INTO Customer (id, customerId, name, email, shippingAddressId, billingAddressId)
 VALUES (2, 'C002', 'Jane Smith', 'jane.smith@example.com', 2, 2);
 

@@ -2,6 +2,7 @@
 
 ORDER='order'
 PAYMENT='payment'
+ARTICLE-UI='article-ui'
 
 if [ "$#" -eq 0 ];
 then
